@@ -10,13 +10,23 @@ include '../Includes/header.php';
                     <h5 class="mt-5">LOG IN</h5>
                 </div>
                 <form class="signup">
-                    <div class="form-group"><input type="text" class="form-control" placeholder="Username"></div>
-                    <div class="invalid-feedback">Please choose a username.</div>
-                    <div class="form-group"><input type="password" class="form-control" placeholder="password"></div> <button type="button" class="btn btn-primary">Login</button>
+
+                    <div class="form-group">
+                        <input type="text" id="log_in_email_phone" class="form-control" placeholder="Email/Phone">
+                        <span class="errors" id="email_phone_error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="password" id="log_in_password" class="form-control" placeholder="Password">
+                        <span class="errors" id="password_error"></span>
+                    </div>
+
+                        <button type="button" class="btn btn-primary" id="log_in_button">Login</button>
                 </form>
-                <a href="#"><p class="text-center pt-2 mr-1">Sign Up</p></a> 
+                <a href="../Register/"><p class="text-center pt-2 mr-1">Sign Up</p></a> 
             </div>
         </div>
     </div>
 </div>
+<script src="./ajax.js"></script>
 </body>
