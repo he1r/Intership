@@ -1,6 +1,6 @@
 <?php
 //LOG IN PAGE BACKEND
-include '../includes/connect_to_database.php';
+include '../Includes/connect_to_database.php';
 
 session_start();
 

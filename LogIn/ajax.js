@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
     //LOG IN ON CLICK BUTTON EVENT
-    $("#log_in_button.btn.btn-primary").click(function(e) {
+    $("#log_in_button").click(function(e) {
 
         //STOP THE PAGE RELOAD ON BUTTON CLICK
         e.preventDefault();

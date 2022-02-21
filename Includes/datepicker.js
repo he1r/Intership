@@ -5,7 +5,7 @@ $(document).ready(function() {
         $('.js-datepicker').daterangepicker({
             "singleDatePicker": true,
             "showDropdowns": true,
-            "autoUpdateInput": true,
+            "autoUpdateInput": false,
             locale: {
                 format: 'DD/MM/YYYY'
             },
@@ -45,7 +45,9 @@ $(document).ready(function() {
         });
 
 
-    } catch (er) { console.log(er); }
+    } catch (er) {
+        console.log(er);
+    }
     try {
         var selectSimple = $('.js-select-simple');
 
