@@ -84,7 +84,8 @@ $query_data = "SELECT id,
                       nr_tel,
                       datelindja,
                       username,
-                      role 
+                      role,
+                      avatar
                FROM users where 1 = 1   
                $searchQuery  ORDER BY  $columnName $columnSortOrder $pagination";
 
@@ -107,6 +108,7 @@ while ($row = mysqli_fetch_assoc($result_data)) {
     $data[$row['id']]['datelindja'] = $row['datelindja'];
     $data[$row['id']]['username'] = $row['username'];
     $data[$row['id']]['role'] = $row['role'];
+    $data[$row['id']]['avatar'] = $row['avatar'];
 
 }
 /**
@@ -122,7 +124,8 @@ foreach ($data as $key => $row) {
         "nr_tel" => $row['nr_tel'],
         "datelindja" => $row['datelindja'],
         "username" => $row['username'],
-        "role" => $row['role']
+        "role" => $row['role'],
+        "avatar" => "<img style= 'width: 50px; height:50px;'src=" . $row['avatar']. ">"
         );
 }
 

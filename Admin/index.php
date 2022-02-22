@@ -54,7 +54,7 @@ if (!isset($_SESSION["user"])) {
             </button>
         </div>
     <h1 class="text-center mb-10">ADMINISTRATOR</h1>
-    <button style= "margin-left:90%; width:150px" class="btn">Add User</button>
+    <button style= "margin-left:90%; width:150px" id="admin_add_user" class="btn">Add User</button>
     <fieldset class="text-center" id="dataTable">
     <table id="adminTable" class="display" style="width:100%">
         <thead>
@@ -69,6 +69,7 @@ if (!isset($_SESSION["user"])) {
                 <th>datelindja</th>
                 <th>username</th>
                 <th>role</th>
+                <th>avatar</th>
             </tr>
         </thead>
     </table>
@@ -131,6 +132,7 @@ if (!isset($_SESSION["user"])) {
 							<button class="btn btn-primary" style = "margin-top: 22px" id="cancelUpdatePassword">Close</button>
 						</div>
 </div>
+</div>
  <!-- The Modal -->
  <div id="add_user_modal" class="modal">
   <div class="modal-content" style="width: 20%; border: 4px solid black; border-radius: 10px">
@@ -180,7 +182,7 @@ if (!isset($_SESSION["user"])) {
 						</div>
 						
 						<div>
-							<button class="btn btn-primary" style = "margin-top: 22px" id="admin_add_user">Add User</button>
+							<button class="btn btn-primary" style = "margin-top: 22px" id="admin_add_user_button">Add User</button>
 							<button class="btn btn-primary" style = "margin-top: 22px" id="cancel_update_user">Close</button>
 						</div>
     <script src="./server_side.js"></script>
