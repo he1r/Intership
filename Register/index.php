@@ -10,7 +10,6 @@ include '../Includes/header.php'
                     <h5 class="mt-5">SIGN UP</h5>
                 </div>
                 <form class="signup">
-
                     <div class="form-group">
                         <input type="text" id="register_emri" class="form-control" placeholder="Emri" required>
                         <span class="errors" id="register_emri_error"></span>

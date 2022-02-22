@@ -132,7 +132,6 @@ include './getUserData.php';
 						<br>
 						<button style="width: 200px; margin-right: 20px;" class="btn btn-primary" id="change_password_modal">Change Password</button>
 					</div>
-					<!-- Trigger/Open The Modal -->
 <!-- The Modal -->
 <div id="password_modal" class="modal">
   <div class="modal-content" style="border: 4px solid black; border-radius: 10px">

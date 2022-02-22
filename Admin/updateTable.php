@@ -3,7 +3,7 @@
 include "../Includes/connect_to_database.php";
 
 /**
- * GET ALL THE DATA FROM THE TABLE  
+ * GET ALL THE DATA FROM THE TABLE
  */
 $draw = $_POST['draw'];
 $limit_start = $_POST['start'];
@@ -109,23 +109,22 @@ while ($row = mysqli_fetch_assoc($result_data)) {
     $data[$row['id']]['username'] = $row['username'];
     $data[$row['id']]['role'] = $row['role'];
     $data[$row['id']]['avatar'] = $row['avatar'];
-
 }
 /**
  * PERSHTASIM TE DHENAT SIPAS FORMATIT QE KERKOHET NE BACKEND
  */
 foreach ($data as $key => $row) {
     $table_data[] = array("id" => $row['id'],
-    "actions" => '<div class="row"> <button class="edit_button btn" style="width: 30%; color:white; margin-left: 10%">Edit</button><button class= "admin_delete_user btn" style="width: 30%; color: white; margin-left:10%">Delete</button></div>',
+    "actions" => '<div class="row"> <button class="edit_button btn" style="width: 30%; color:white; margin-left: 10%">Edit</button><button class= "admin_delete_user btn" style="width: 40%; color: white; margin-left:10%">Delete</button></div>',
         "emri" => $row['emri'],
         "mbiemri" => $row['mbiemri'],
-        "atesia" => $row['atesia'], 
+        "atesia" => $row['atesia'],
         "email" => $row['email'],
         "nr_tel" => $row['nr_tel'],
         "datelindja" => $row['datelindja'],
         "username" => $row['username'],
         "role" => $row['role'],
-        "avatar" => "<img style= 'width: 50px; height:50px;'src=" . $row['avatar']. ">"
+        "avatar" => "<img class='userAvatar' style= 'width: 50px; height:50px;' src=" . $row['avatar']. ">"
         );
 }
 
@@ -134,4 +133,3 @@ foreach ($data as $key => $row) {
  */
 $response = array("draw" => intval($draw), "iTotalRecords" => $totalRecords, "iTotalDisplayRecords" => $totalRecordwithFilter, "aaData" => $table_data);
 echo json_encode($response);
-?>

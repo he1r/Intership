@@ -5,9 +5,9 @@ include '../Includes/connect_to_database.php';
 session_start();
 
 // Nese useri nuk ka session e cojme te login
-if (!isset($_SESSION["user"])) { 
-        header("Location: ../LogIn/");
-        exit;
+if (!isset($_SESSION["user"])) {
+    header("Location: ../LogIn/");
+    exit;
 }
     $username = $_SESSION["user"];
 
@@ -26,10 +26,10 @@ if (!isset($_SESSION["user"])) {
     * NQFS ROW EKZISTON CHECKOJM DERGOJME TE DHENAT E USERIT
     */
     if ($userRow) {
-     $emri = $userRow["emri"];
-     $mbiemri = $userRow["mbiemri"];
-     $role = $_SESSION['role'];
-}
+        $emri = $userRow["emri"];
+        $mbiemri = $userRow["mbiemri"];
+        $role = $_SESSION['role'];
+    }
 ?>
 <body>
 <div id="wrapper">
@@ -42,8 +42,8 @@ if (!isset($_SESSION["user"])) {
        <li style="margin-top: 10%;"><a href="../Welcome/">Welcome Page</a></li>
        <li><a href="../Profile/">Profile</a></li>
        <li><a href="../LogIn/">Log Out</a></li>
-       <?php 
-       if($role == "admin"){
+       <?php
+       if ($role == "admin") {
            echo "<li><a href='../Admin/'>Administrator</a></li>";
        }
        ?>

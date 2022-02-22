@@ -1,5 +1,4 @@
 $(document).ready(function() {
-
     //LOG IN ON CLICK BUTTON EVENT
     $("#log_in_button").click(function(e) {
 

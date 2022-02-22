@@ -2,10 +2,10 @@
 include "../Includes/connect_to_database.php";
 include '../Includes/regex.php';
 
-/**
- *  CHECK IF USER SENDING THE REQUES IS AN ADMIN
+ /**
+ *  CHECK IF USER SENDING THE REQUEST IS AN ADMIN
  */
-if($_SESSION["user"]){
+if ($_SESSION["user"]) {
     //THE USER ID
     $sessionId = $_SESSION["user"];
 
@@ -19,7 +19,7 @@ if($_SESSION["user"]){
     $session_result = mysqli_fetch_assoc($session_query_execute);
 
     //CHECK IF THE USER IN THE ROW IS ADMIN OR NOT
-    if($session_result['user'] != "admin"){
+    if ($session_result['user'] != "admin") {
         echo json_encode(array("status"=> "401", "message"=> "The user sending this request is not an admin"));
         exit;
     }
@@ -44,25 +44,25 @@ if ($_POST["action"] == 'adminUpdateUser') {
     $id = $_POST['id'];
 
 
-    if(empty($datelindja)){
+    if (empty($datelindja)) {
         echo json_encode(array("status" => "401", "message" => "Datelindja input is empty!"));
-       exit;
-      }
-      if(!preg_match($lettersRegex, $emri) || !preg_match($lettersRegex, $mbiemri) || !preg_match($lettersRegex, $atesia) || !preg_match($lettersRegex, $role)){
+        exit;
+    }
+    if (!preg_match($lettersRegex, $emri) || !preg_match($lettersRegex, $mbiemri) || !preg_match($lettersRegex, $atesia) || !preg_match($lettersRegex, $role)) {
         echo json_encode(array("status" => "401", "message" => "Emri, mbiemri, atesia, role nuk duhet te jene bosh dhe duhet te kene vetem shkronja!"));
-      exit;
-      }
-      if(!preg_match($emailRegex, $email)){
+        exit;
+    }
+    if (!preg_match($emailRegex, $email)) {
         echo json_encode(array("status" => "401", "message" => "Email eshte gabim!"));
         exit;
-      }
-      if(!preg_match($nr_telRegex, $nr_Tel)){
+    }
+    if (!preg_match($nr_telRegex, $nr_Tel)) {
         echo json_encode(array("status" => "401", "message" => "Phone number duhet te kete vetem numra"));
         exit;
-      }
+    }
 
     /**
-     * GET THE USERS EMAIL THAT IS IN DATABASE TO CHECK IF THE EMAIL INPUT FIELD VALUE HAS CHANGED 
+     * GET THE USERS EMAIL THAT IS IN DATABASE TO CHECK IF THE EMAIL INPUT FIELD VALUE HAS CHANGED
      */
 
     $query_getUser_email =  "SELECT * FROM users WHERE id= '$id'";
@@ -73,7 +73,7 @@ if ($_POST["action"] == 'adminUpdateUser') {
      * NQFS ROW ME ID E MARRE EKZISTON ATHERE JEPI VARIABLAVE EMAIL AND NR INITIAL VALUE EMAILIN DHE NR_TEL NGA DATABASA
      */
 
-    if($email_row){
+    if ($email_row) {
         $emailInitialValue = $email_row['email'];
         $nr_tel_initialValue = $email_row['nr_tel'];
     }
@@ -149,12 +149,53 @@ if ($_POST["action"] == 'adminUpdateUser') {
             }
         }
     };
+    //GET THE IMAGE FROM THE POST REQUEST
+    $img = $_FILES['file']['name'];
+            
+    //KRIJOJM RANDOM NUMBERS NGA 1 DERI NE 1000 PER TU MOS U BERE UPLOAD NJE IMAZH ME EMER TE NJEJTE
+    $final_image = rand(1, 1000).$img;
+
+    //THE FILE PATH TO BE UPLOADED IN THE DATABASE
+    $file_path = '../Images/'. $final_image;
 
     /**
-    * EKZEKUTOJME QUERYIN PER TE BERE UPDATE TE DHENAT E USERIT
+    * IF THERES AN IMAGE THE QUERY SHOULD HAVE SET AVATAR TO UPDATE THE AVATAR
+    * IF THERES NO IMAGE UPLOADED BY USER THE QUERY SHOULD BE WITHOUT SET AVATAR TO UPDATE THE AVATAR
+    *
     */
 
-    $updateUserQuery = "UPDATE `users` SET `emri`='$emri',`mbiemri`='$mbiemri',`atesia`='$atesia',`nr_tel`='$nr_Tel',`email`='$email', `datelindja`='$datelindja',`username`='$username', `role`='$role' WHERE id= '$id'";
+    if ($img) {
+
+     //QUERY TO CHECK IF USER HAS ALREADY UPLOADED AN AVATAR BEFORE
+        $checkAvatarQuery = "SELECT * FROM users WHERE id = '$id'";
+
+        /**
+        * EKZEKUTOJME QUERYIN E AVATARIT
+        */
+
+        $checkAvatarResult = mysqli_query($dbcon, $checkAvatarQuery);
+        $avatarRow = mysqli_fetch_assoc($checkAvatarResult);
+
+        /**
+        * NQFS ROW EKZISTON
+        * FSHIJ FOTON E VJETER DHE BEJ UPLOAD FOTON E RE
+        */
+        if ($avatarRow['avatar'] != '../DefaultImage/default.png') {
+            unlink($avatarRow['avatar']);
+        }
+
+        $updateUserQuery = "UPDATE `users` 
+     SET `emri`='$emri',`mbiemri`='$mbiemri',`atesia`='$atesia',`nr_tel`= '$nr_Tel',`email`='$email', `datelindja`='$datelindja',`username`='$username', `avatar` = '$file_path'
+     WHERE  id = '$id'";
+
+        //BEJM MOVE IMAZHIN NE FOLDERIN E DHENE
+        move_uploaded_file($_FILES['file']['tmp_name'], '../Images/' . $final_image);
+    }
+    if (!$img) {
+        $updateUserQuery = "UPDATE `users` 
+                            SET `emri`='$emri',`mbiemri`='$mbiemri',`atesia`='$atesia',`nr_tel`= '$nr_Tel',`email`='$email', `datelindja`='$datelindja',`username`='$username' 
+                            WHERE id = '$id' ";
+    }
     $updateUserResult = mysqli_query($dbcon, $updateUserQuery);
    
     if ($updateUserResult == "TRUE") {
@@ -167,10 +208,10 @@ if ($_POST["action"] == 'adminUpdateUser') {
 if ($_POST['action'] == "deleteUser") {
     
     //GET THE EMAIL FROM THE POST DATA
-    $email = $_POST['email'];
+    $id = $_POST['id'];
 
     //QUERY TO DELETE USER FROM DATABASE
-    $deleteUserQuery = "DELETE FROM `users` WHERE email = '$email'";
+    $deleteUserQuery = "DELETE FROM `users` WHERE id = '$id'";
 
     //EXECUTE QUERY
     $deleteUserResult = mysqli_query($dbcon, $deleteUserQuery);
@@ -184,4 +225,86 @@ if ($_POST['action'] == "deleteUser") {
     }
 }
 
-?>
+//ADMIN ADD USER BUTTON
+if ($_POST["action"] == 'adminAddUser') {
+    /**
+    * Marrim te dhenat e userit qe vijne nga front end
+    */
+    $emri = mysqli_real_escape_string($dbcon, $_POST["emri"]);
+    $mbiemri = mysqli_real_escape_string($dbcon, $_POST["mbiemri"]);
+    $atesia = mysqli_real_escape_string($dbcon, $_POST["atesia"]);
+    $nr_Tel = mysqli_real_escape_string($dbcon, $_POST["nr_tel"]);
+    $email = mysqli_real_escape_string($dbcon, $_POST["email"]);
+    $password = mysqli_real_escape_string($dbcon, $_POST["password"]);
+    $datelindja = mysqli_real_escape_string($dbcon, $_POST["datelindja"]);
+    $Username = $emri[0].$mbiemri;
+    $Role = "user";
+
+    if (empty($datelindja)) {
+        echo json_encode(array("status" => "401", "message" => "Datelindja input is empty!"));
+        exit;
+    }
+    if (!preg_match($lettersRegex, $emri) || !preg_match($lettersRegex, $mbiemri) || !preg_match($lettersRegex, $atesia)) {
+        echo json_encode(array("status" => "401", "message" => "Emri, mbiemri, atesia nuk duhet te jene bosh dhe duhet te kene vetem shkronja!"));
+        exit;
+    }
+    if (!preg_match($emailRegex, $email)) {
+        echo json_encode(array("status" => "401", "message" => "Email eshte gabim!"));
+        exit;
+    }
+    if (!preg_match($nr_telRegex, $nr_Tel)) {
+        echo json_encode(array("status" => "401", "message" => "Phone number duhet te kete vetem numra"));
+        exit;
+    }
+    if (!preg_match($passwordRegex, $password)) {
+        echo json_encode(array("status" => "401", "message" => "Password duhet te kete nje shkronje te madhe, nje numer, dhe nje karakter special!"));
+        exit;
+    }
+
+    /**
+    * QUERYT PER TE PARE NQFS EMAILI DHE PASSWORD JANE NE DATABAZA
+    */
+    $emailExistsQuery = "SELECT * FROM users WHERE email= '$email'";
+    $phoneExistsQuery = "SELECT * FROM  users WHERE nr_tel = '$nr_Tel'";
+
+    /**
+     * EKZEKUTOJME QUERYIN E EMAILIT
+     * CHECK NQFS EKZISTON ROW ME EMAILIN QE MERRET NGA INPUT FIELD
+     */
+    $emailResult = mysqli_query($dbcon, $emailExistsQuery);
+    $emailRow = mysqli_fetch_assoc($emailResult);
+ 
+    if ($emailRow) {
+        if ($emailRow['email'] == $email) {
+            echo json_encode(array("status" => "404", "message" => "Email already exists!"));
+            exit;
+        }
+    }
+
+    /**
+   * EKZEKUTOJME QUERYIN E PHONE NUMBER
+   * CHECK NQFS EKZISTON ROW ME NR_TEL QE MERRET NGA INPUT FIELD
+   */
+    $phoneResult = mysqli_query($dbcon, $phoneExistsQuery);
+    $phoneRow = mysqli_fetch_assoc($phoneResult);
+  
+    if ($phoneRow) {
+        if ($phoneRow['nr_tel'] == $nr_Tel) {
+            echo json_encode(array("status" => "404", "message" => "Phone Number already exists!"));
+            exit;
+        }
+    }
+
+    /**
+   * EKZEKUTOJME QUERYIN PER TE SHTUAR NJE USER TE RI NE DATABAZE
+   */
+    $passwordHashed = md5($password);
+    $insertUserQuery = "INSERT INTO users (emri, mbiemri, atesia, email, nr_tel, password, datelindja, username, role, avatar) VALUES ('$emri', '$mbiemri', '$atesia', '$email', '$nr_Tel', '$passwordHashed', '$datelindja', '$Username', '$Role', '../DefaultImage/default.png')";
+    $insertUserResult = mysqli_query($dbcon, $insertUserQuery);
+    
+    // NQFS RESULTATI I QUERIT == TRUE ATHERE NE DATABASE U SHTUA NJE USER I RI -- DERGO NE FRONTEND QE USERI U SHTUA
+    if ($insertUserResult == "TRUE") {
+        echo json_encode(array("status" => "200", "message" => "Te dhenat u rregjistruan!"));
+        exit;
+    }
+}

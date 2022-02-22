@@ -1,20 +1,24 @@
 $(document).ready(function() {
+
     //GET THE CHANGE PASSWORD MODAL
     var modal = document.getElementById("password_modal");
 
     //GET THE BUTTON THAT OPENS THE MODAL
     var open_modal = document.getElementById("change_password_modal");
+
     //SHOW THE MODAL
     open_modal.onclick = function() {
-            modal.style.display = "block";
-        }
-        //GET THE BUTTON THAT CLOSES THE MODAL
+        modal.style.display = "block";
+    }
+
+    //GET THE BUTTON THAT CLOSES THE MODAL
     var cancel_button = document.getElementById("cancelUpdatePassword");
     //CLOSE THE MODAL ON BUTTON CLICK
     cancel_button.onclick = function() {
-            modal.style.display = "none"
-        }
-        //UPDATE PASSWORD BUTTON
+        modal.style.display = "none"
+    }
+
+    //UPDATE PASSWORD BUTTON
     $("#updatePasswordButton").click(function(e) {
 
         //STOP THE PAGE FROM RELOADING

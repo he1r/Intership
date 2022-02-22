@@ -40,13 +40,12 @@ if ($_POST["action"] == 'email_log_in') {
             echo json_encode(array("status" => "200", "message" => "User Logs In"));
 
             exit;
-        }else{
+        } else {
             echo json_encode(array("status"=> "401", "message" => "The password you entered is wrong!"));
             exit;
         }
-    }else{
+    } else {
         echo json_encode(array("status" => "404", "message" => "The email or phone number you entered is wrong!"));
         exit;
     }
 }
-?>

@@ -1,4 +1,18 @@
+//EMAIL SINGLE SEARCH
 $(document).ready(function() {
+    $('.js-example-basic-single').select2({
+        ajax: "./update_email_search.php",
+    });
+});
+
+//NUMRI MULTIPLE SEARCH
+$(document).ready(function() {
+    $('.js-example-basic-multiple').select2();
+});
+
+$(document).ready(function() {
+
+
     //LOAD THE DATATABLE AND THE DATA
     var table = $('#adminTable').DataTable({
         processing: true,
@@ -46,166 +60,181 @@ $(document).ready(function() {
     //SHOW THE EDIT USER MODAL AND SEND THE DATA TO BACKEND
     $(document).on('click', '.edit_button', function(e) {
 
-            //GET THE EDIT USER MODAL
-            var modal = document.getElementById("password_modal");
+        //GET THE EDIT USER MODAL
+        var modal = document.getElementById("password_modal");
 
-            //SHOW THE EDIT USER MODAL
-            modal.style.display = "block";
-            //GET THE BUTTON ROW
-            var currentRow = $(this).closest("tr");
+        //SHOW THE EDIT USER MODAL
+        modal.style.display = "block";
+        //GET THE BUTTON ROW
+        var currentRow = $(this).closest("tr");
 
-            //GET THE ROW DATA FOR THE BUTTON ROW
-            var id = currentRow.find("td:eq(0)").text();
-            var emri = currentRow.find("td:eq(2)").text();
-            var email = currentRow.find("td:eq(5)").text();
-            var mbiemri = currentRow.find("td:eq(3)").text();
-            var atesia = currentRow.find("td:eq(4)").text();
-            var nr_tel = currentRow.find("td:eq(6)").text();
-            var datelindja = currentRow.find("td:eq(7)").text();
-            var username = currentRow.find("td:eq(8)").text();
-            var role = currentRow.find("td:eq(9)").text();
+        var id = table.row(currentRow).data().id
+        var emri = table.row(currentRow).data().emri
+        var mbiemri = table.row(currentRow).data().mbiemri
+        var email = table.row(currentRow).data().email
+        var atesia = table.row(currentRow).data().atesia
+        var nr_tel = table.row(currentRow).data().nr_tel
+        var datelindja = table.row(currentRow).data().datelindja
+        var username = table.row(currentRow).data().username
+        var role = table.row(currentRow).data().role
 
-            //FILL ALL THE EDIT INPUT FIELDS WITH THE VALUES FROM THE ROW
-            document.getElementById("emri_admin").value = `${emri}`
-            document.getElementById("mbiemri_admin").value = `${mbiemri}`;
-            document.getElementById("atesia_admin").value = `${atesia}`;
-            document.getElementById("phone_admin").value = `${nr_tel}`;
-            document.getElementById("datelindja_admin").value = `${datelindja}`;
-            document.getElementById("username_admin").value = `${username}`;
-            document.getElementById("role_admin").value = `${role}`;
-            document.getElementById("email_admin").value = `${email}`;
+        //FILL ALL THE EDIT INPUT FIELDS WITH THE VALUES FROM THE ROW
+        document.getElementById("emri_admin").value = `${emri}`
+        document.getElementById("mbiemri_admin").value = `${mbiemri}`;
+        document.getElementById("atesia_admin").value = `${atesia}`;
+        document.getElementById("phone_admin").value = `${nr_tel}`;
+        document.getElementById("datelindja_admin").value = `${datelindja}`;
+        document.getElementById("username_admin").value = `${username}`;
+        document.getElementById("role_admin").value = `${role}`;
+        document.getElementById("email_admin").value = `${email}`;
+        var index = currentRow[0]._DT_RowIndex
+        var img = document.getElementsByTagName("img")[index].src
+        document.getElementById("admin_img").setAttribute('src', img)
 
-            //UPDATE USER BUTTON CLICK
-            $(document).on('click', '#adminUpdateUser', function(e) {
+        //UPDATE USER BUTTON CLICK
+        $(document).on('click', '#adminUpdateUser', function(e) {
 
-                e.preventDefault();
+            e.preventDefault();
 
-                var Emri = document.getElementById("emri_admin").value;
-                var Mbiemri = document.getElementById("mbiemri_admin").value;
-                var Atesia = document.getElementById("atesia_admin").value;
-                var Email = document.getElementById("email_admin").value;
-                var Nr_Tel = document.getElementById("phone_admin").value;
-                var Datelindja = document.getElementById("datelindja_admin").value;
-                var Username = document.getElementById("username_admin").value;
-                var Role = document.getElementById("role_admin").value;
+            var Emri = document.getElementById("emri_admin").value;
+            var Mbiemri = document.getElementById("mbiemri_admin").value;
+            var Atesia = document.getElementById("atesia_admin").value;
+            var Email = document.getElementById("email_admin").value;
+            var Nr_Tel = document.getElementById("phone_admin").value;
+            var Datelindja = document.getElementById("datelindja_admin").value;
+            var Username = document.getElementById("username_admin").value;
+            var Role = document.getElementById("role_admin").value;
 
-                // EMRI VALIDATION
-                if (!onlyLettersRegex.test(Emri)) {
-                    //SHOW THE ERROR
-                    document.getElementById('emri_admin_error').innerHTML = "Emri duhet te kete vetem shkronja!";
-                    //REMOVE THE ERROR AFTER A PERIOD OF TIME
-                } else {
-                    document.getElementById('emri_admin_error').innerHTML = "";
-                }
+            // EMRI VALIDATION
+            if (!onlyLettersRegex.test(Emri)) {
+                //SHOW THE ERROR
+                document.getElementById('emri_admin_error').innerHTML = "Emri duhet te kete vetem shkronja!";
+                //REMOVE THE ERROR AFTER A PERIOD OF TIME
+            } else {
+                document.getElementById('emri_admin_error').innerHTML = "";
+            }
 
-                //MBIEMRI VALIDATION
-                if (!onlyLettersRegex.test(Mbiemri)) {
-                    //SHOW THE ERROR
-                    document.getElementById('mbiemri_admin_error').innerHTML = "Mbiemri duhet te kete vetem shkronja!";
-                } else {
-                    document.getElementById('mbiemri_admin_error').innerHTML = "";
-                }
+            //MBIEMRI VALIDATION
+            if (!onlyLettersRegex.test(Mbiemri)) {
+                //SHOW THE ERROR
+                document.getElementById('mbiemri_admin_error').innerHTML = "Mbiemri duhet te kete vetem shkronja!";
+            } else {
+                document.getElementById('mbiemri_admin_error').innerHTML = "";
+            }
 
-                //ATESIA VALIDATION
-                if (!onlyLettersRegex.test(Atesia)) {
-                    //SHOW THE ERROR
-                    document.getElementById('atesia_admin_error').innerHTML = "Atesia duhet te kete vetem shkronja!";
-                } else {
-                    document.getElementById('atesia_admin_error').innerHTML = "";
-                }
+            //ATESIA VALIDATION
+            if (!onlyLettersRegex.test(Atesia)) {
+                //SHOW THE ERROR
+                document.getElementById('atesia_admin_error').innerHTML = "Atesia duhet te kete vetem shkronja!";
+            } else {
+                document.getElementById('atesia_admin_error').innerHTML = "";
+            }
 
-                //NR TEL VALIDATION
-                if (!onlyNumbersRegex.test(Nr_Tel)) {
-                    //SHOW THE ERROR
-                    document.getElementById('phone_admin_error').innerHTML = "Phone Number duhet te kete vetem numra!";
-                } else {
-                    document.getElementById('phone_admin_error').innerHTML = "";
-                }
+            //NR TEL VALIDATION
+            if (!onlyNumbersRegex.test(Nr_Tel)) {
+                //SHOW THE ERROR
+                document.getElementById('phone_admin_error').innerHTML = "Phone Number duhet te kete vetem numra!";
+            } else {
+                document.getElementById('phone_admin_error').innerHTML = "";
+            }
 
-                //EMAIL VALIDATION
-                if (!emailRegex.test(Email)) {
-                    //SHOW THE ERROR
-                    document.getElementById('email_admin_error').innerHTML = "Emaili qe vendoset nuk eshte i sakte!";
+            //EMAIL VALIDATION
+            if (!emailRegex.test(Email)) {
+                //SHOW THE ERROR
+                document.getElementById('email_admin_error').innerHTML = "Emaili qe vendoset nuk eshte i sakte!";
 
-                } else {
-                    document.getElementById('email_admin_error').innerHTML = "";
-                }
+            } else {
+                document.getElementById('email_admin_error').innerHTML = "";
+            }
 
-                //ROLE VALIDATION
-                if (!emailRegex.test(Email)) {
-                    //SHOW THE ERROR
-                    document.getElementById('role_admin_error').innerHTML = "Emaili qe vendoset nuk eshte i sakte!";
+            //ROLE VALIDATION
+            if (!onlyLettersRegex.test(Role)) {
+                //SHOW THE ERROR
+                document.getElementById('role_admin_error').innerHTML = "Roli qe vendoset nuk eshte i sakte vendos user ose admin!";
 
-                } else {
-                    document.getElementById('role_admin_error').innerHTML = "";
-                }
-                //DATELINDJA VALIDATION
-                if (!Datelindja) {
-                    //SHOW THE ERROR
-                    document.getElementById('datelindja_admin_error').innerHTML = "Datelindja nuk duhet te jete bosh!";
-                } else {
-                    document.getElementById('datelindja_admin_error').innerHTML = "";
-                }
-                //AJAX POST REQUEST TO SEND THE DATA TO backend.php
-                $.ajax({
-                    type: "POST",
-                    url: "./backend.php",
-                    data: {
-                        action: 'adminUpdateUser',
-                        emri: Emri,
-                        mbiemri: Mbiemri,
-                        atesia: Atesia,
-                        email: Email,
-                        nr_tel: Nr_Tel,
-                        datelindja: Datelindja,
-                        username: Username,
-                        role: Role,
-                        id: id,
-                    },
+            } else {
+                document.getElementById('role_admin_error').innerHTML = "";
+            }
+            //DATELINDJA VALIDATION
+            if (!Datelindja) {
+                //SHOW THE ERROR
+                document.getElementById('datelindja_admin_error').innerHTML = "Datelindja nuk duhet te jete bosh!";
+            } else {
+                document.getElementById('datelindja_admin_error').innerHTML = "";
+            }
+            // GET THE FILE SUBMITTED BY USER
+            var file_data = $("#admin_file").prop("files")[0]
 
-                    success: function(arr) {
-                        var res = JSON.parse(arr);
+            //CREATE A NEW FORM DATA
+            var form_data = new FormData()
 
-                        if (res.status == "200") {
-                            Swal.fire(res.message)
-                                //REDRAW TABLE
-                            table.ajax.reload();
-                            return;
-                        }
-                        if (res.status == "404") {
-                            Swal.fire(res.message)
-                            return;
-                        }
-                        if (res.status == "401") {
-                            console.lpg(res.message)
-                            return;
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        alert(`${JSON.stringify(error)} | ${JSON.stringify(xhr)} | ${status}`)
+            //ADD THE FILE SUBMITTED BY USER TO THE FORM DATA ALSO ADD THE OTHER DATA FROM THE INPUT FIELDS
+            form_data.append('file', file_data);
+            form_data.append('action', "adminUpdateUser");
+            form_data.append("emri", Emri);
+            form_data.append("mbiemri", Mbiemri);
+            form_data.append("atesia", Atesia);
+            form_data.append("email", Email);
+            form_data.append("nr_tel", Nr_Tel);
+            form_data.append("datelindja", Datelindja);
+            form_data.append("username", Username);
+            form_data.append("role", Role);
+            form_data.append("id", id);
+
+            //AJAX POST REQUEST TO SEND THE DATA TO backend.php
+            $.ajax({
+                url: "backend.php",
+                type: "POST",
+                data: form_data,
+                contentType: false,
+                processData: false,
+                success: function(array) {
+
+                    //PARSE THE RESPONSE FROM THE BACKEND
+                    var response = JSON.parse(array)
+
+                    if (response.status == "200") {
+                        Swal.fire(response.message)
+                        table.ajax.reload()
+                        return;
+
                     }
-                })
-
-            })
+                    if (response.status == "404") {
+                        Swal.fire(response.message)
+                        return;
+                    }
+                    if (response.status == "401") {
+                        console.log(response.message)
+                        return;
+                    }
+                },
+                error: function(xhr, status, error) {
+                    alert(`${JSON.stringify(error)} | ${JSON.stringify(xhr)} | ${status}`)
+                }
+            });
         })
-        //REMOVE THE EDIT USER MODAL ON BUTTON CLICK
+    })
+    //REMOVE THE EDIT USER MODAL ON BUTTON CLICK
     $("#cancelUpdatePassword").click(function() {
-            //GET THE EDIT USER MODAL
-            var modal = document.getElementById("password_modal");
+        //GET THE EDIT USER MODAL
+        var modal = document.getElementById("password_modal");
 
-            //REMOVE THE EDIT USER MODAL
-            modal.style.display = "none";
-        })
-        //ADMIN DELETE USER BUTTON
+        //REMOVE THE EDIT USER MODAL
+        modal.style.display = "none";
+    })
+    //ADMIN DELETE USER BUTTON
     $(document).on('click', '.admin_delete_user', function(e) {
 
         e.preventDefault();
+
+        //TO DO
+        // CHANGE HOW TO GET THE ROW DATA
 
         //GET THE BUTTON ROW
         var currentRow = $(this).closest("tr");
 
         //GET THE EMAIL CELL DATA FOR THE BUTTON ROW
-        var email = currentRow.find("td:eq(5)").text();
+        var id = table.row(currentRow).data().id
 
         //CONFRIM ALERT (USER CHOOSES IF HE IS SURE TO DELETE THE USER)
         Swal.fire({
@@ -221,7 +250,7 @@ $(document).ready(function() {
                     url: './backend.php',
                     data: {
                         action: 'deleteUser',
-                        email: email,
+                        id: id,
                     },
                     success: function(arr) {
 
@@ -259,52 +288,6 @@ $(document).ready(function() {
             }
         })
     });
-    //ADD A NEW USER 
-    $(document).on('click', '#addUser', function() {
-
-        var Emri = document.getElementById("adminEmri").value;
-        var Mbiemri = document.getElementById("adminMbiemri").value;
-        var Atesia = document.getElementById("adminAtesia").value;
-        var Email = document.getElementById("adminEmail").value;
-        var Nr_Tel = document.getElementById("adminTel").value;
-        var Datelindja = document.getElementById("adminDatelindja").value;
-
-
-        //AJAX POST REQUEST TO SEND THE DATA TO backend.php
-        $.ajax({
-            type: "POST",
-            url: "./backend.php",
-            data: {
-                action: 'adminAddUser',
-                emri: Emri,
-                mbiemri: Mbiemri,
-                atesia: Atesia,
-                email: Email,
-                nr_tel: Nr_Tel,
-                datelindja: Datelindja,
-            },
-
-            success: function(arr) {
-                var res = JSON.parse(arr);
-
-                if (res.status == "200") {
-                    Swal.fire(res.message)
-
-                    //REDRAW TABLE
-                    table.ajax.reload();
-                    return;
-                }
-                if (res.status == "404") {
-                    Swal.fire(res.message)
-                    return;
-                }
-            },
-            error: function(xhr, status, error) {
-                alert(`${JSON.stringify(error)} | ${JSON.stringify(xhr)} | ${status}`)
-            }
-        })
-    })
-
     //ADD USER BUTTON => SHOWS THE ADD USER MODAL
     $("#admin_add_user").click(function(e) {
         //GET THE EDIT USER MODAL
@@ -314,6 +297,7 @@ $(document).ready(function() {
         modal.style.display = "block";
 
         $("#admin_add_user_button").click(function(e) {
+
             e.preventDefault();
 
             /**
@@ -402,7 +386,7 @@ $(document).ready(function() {
                 type: "POST",
                 url: "./backend.php",
                 data: {
-                    action: 'sign_up',
+                    action: 'adminAddUser',
                     emri: Emri,
                     mbiemri: Mbiemri,
                     atesia: Atesia,
@@ -429,6 +413,7 @@ $(document).ready(function() {
                             icon: 'success',
                             text: res.message,
                         })
+                        table.ajax.reload()
                         return;
                     }
                     if (res.status == "404") {
@@ -448,7 +433,15 @@ $(document).ready(function() {
                     alert(`${JSON.stringify(error)} | ${JSON.stringify(xhr)} | ${status}`)
                 }
             })
-        })
 
+        })
+    })
+    // REMOVE THE ADD USER MODAL ON CLICK
+    $("#cancel_update_user_button").click(function(e) {
+        //GET THE EDIT USER MODAL
+        var modal = document.getElementById("add_user_modal");
+
+        //SHOW THE EDIT USER MODAL
+        modal.style.display = "none";
     })
 })

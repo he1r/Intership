@@ -554,3 +554,10 @@
     .open-button:hover {
         opacity: 1;
     }
+
+    .select2-container--default .select2-selection--single {
+        background-color: #fff;
+        border: 1px solid #aaa;
+        border-radius: 4px;
+        margin-left: 50px;
+    }
