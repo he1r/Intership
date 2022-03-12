@@ -43,7 +43,7 @@ if ($_POST["action"] == 'adminUpdateUser') {
 
     $id = $_POST['id'];
 
-
+    //VALIDATE THE DATA WE GET FROM FRONTEND
     if (empty($datelindja)) {
         echo json_encode(array("status" => "401", "message" => "Datelindja input is empty!"));
         exit;
@@ -185,7 +185,7 @@ if ($_POST["action"] == 'adminUpdateUser') {
         }
 
         $updateUserQuery = "UPDATE `users` 
-     SET `emri`='$emri',`mbiemri`='$mbiemri',`atesia`='$atesia',`nr_tel`= '$nr_Tel',`email`='$email', `datelindja`='$datelindja',`username`='$username', `avatar` = '$file_path'
+     SET `emri`='$emri',`mbiemri`='$mbiemri',`atesia`='$atesia',`nr_tel`= '$nr_Tel',`email`='$email', `datelindja`='$datelindja',`username`='$username', `role` = '$role', `avatar` = '$file_path'
      WHERE  id = '$id'";
 
         //BEJM MOVE IMAZHIN NE FOLDERIN E DHENE
@@ -193,7 +193,7 @@ if ($_POST["action"] == 'adminUpdateUser') {
     }
     if (!$img) {
         $updateUserQuery = "UPDATE `users` 
-                            SET `emri`='$emri',`mbiemri`='$mbiemri',`atesia`='$atesia',`nr_tel`= '$nr_Tel',`email`='$email', `datelindja`='$datelindja',`username`='$username' 
+                            SET `emri`='$emri',`mbiemri`='$mbiemri',`atesia`='$atesia',`nr_tel`= '$nr_Tel',`email`='$email', `datelindja`='$datelindja', `role` = '$role', `username`='$username' 
                             WHERE id = '$id' ";
     }
     $updateUserResult = mysqli_query($dbcon, $updateUserQuery);
@@ -208,10 +208,10 @@ if ($_POST["action"] == 'adminUpdateUser') {
 if ($_POST['action'] == "deleteUser") {
     
     //GET THE EMAIL FROM THE POST DATA
-    $id = $_POST['id'];
+    $usrId = $_POST['id'];
 
     //QUERY TO DELETE USER FROM DATABASE
-    $deleteUserQuery = "DELETE FROM `users` WHERE id = '$id'";
+    $deleteUserQuery = "DELETE FROM users WHERE id = '$usrId'";
 
     //EXECUTE QUERY
     $deleteUserResult = mysqli_query($dbcon, $deleteUserQuery);

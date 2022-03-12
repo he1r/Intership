@@ -45,6 +45,21 @@ if (!isset($_SESSION["user"])) {
            echo "<li><a href='../Admin/'>Administrator</a></li>";
        }
        ?>
+         <?php
+       if ($role == "admin") {
+           echo "<li><a href='../Checkins/'>CheckIns</a></li>";
+       }
+       ?>
+        <?php
+       if ($role == "admin") {
+           echo "<li><a href='../Pagat/'>Pagat</a></li>";
+       }
+       ?>
+       <?php
+       if ($role == "admin") {
+           echo "<li><a href='../Produktet/'>Produktet</a></li>";
+       }
+       ?>
      </ul>
   </nav>
             <button type="button" class="hamburger animated fadeInLeft is-closed" data-toggle="offcanvas">
@@ -54,11 +69,22 @@ if (!isset($_SESSION["user"])) {
             </button>
         </div>
     <h1 class="text-center mb-10">ADMINISTRATOR</h1>
-    <label for="emailSearch" style="margin-left: 55px">Email</label>  <label for="emailSearch" style="margin-left: 155px">Phone</label><br>
-    <select style = 'margin-left: 100px; width: 200px;' class="js-example-basic-single" name="state"></select>  <select style = 'margin-left: 100px; width: 300px;' class="js-example-basic-multiple" style = 'width: 100px; margin-left: 30%;' name="state"></select>
+    <label for="emailSearch" style="margin-left: 55px">Email</label>  <label for="emailSearch" style="margin-left: 110px">Phone</label><br>
+    <div class="row">
+        <div>
+        <select style = 'padding-left: 100px; width: 200px;' id="email_value" class="selectjs" name="state"></select> 
+        </div>
+        <div style="margin-left:20px">
+        <select style = 'padding-left: 100px; width: 300px;' id ='phone_search_value' class="phone_search_select2 form-control" style = 'width: 100px; margin-left: 30%;' name="state"></select> 
+        </div>
+        <div style="margin-left:20px">
+        <input type="text" id="filter_date_picker" style="width: 200px" placeholder="Select Datelindja"/>
+        </div>
+    </div>
+     <button class="btn" style="margin-left: 50px; margin-top: 20px; width: 100px" id = "search_filters">Filter</button>
     <button style= "margin-left:90%; width:150px" id= 'admin_add_user' class="btn">Add User</button>
-    <fieldset class="text-center" id="dataTable">
-    <table id="adminTable" class="display" style="width:100%">
+    <fieldset class="text-center" style="width: 100%" id="dataTable">
+    <table id="adminTable" class="display">
         <thead>
             <tr>
                 <th>id</th>

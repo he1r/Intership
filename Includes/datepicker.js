@@ -1,6 +1,27 @@
 $(document).ready(function() {
     'use strict';
 
+    var startDate;
+    var endDate;
+
+    $('#filter_date_picker').daterangepicker({
+        autoUpdateInput: false,
+        "showDropdowns": true,
+        function(start, end) {
+            startDate = start;
+            endDate = end;
+        }
+    });
+
+    $('#filter_date_picker').on('apply.daterangepicker', function(ev, picker) {
+        $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+    });
+
+    $('#filter_date_picker').on('cancel.daterangepicker', function(ev, picker) {
+        $(this).val('');
+    });
+
+
     try {
         $('.js-datepicker').daterangepicker({
             "singleDatePicker": true,
@@ -63,6 +84,5 @@ $(document).ready(function() {
     } catch (err) {
         console.log(err);
     }
-
 
 })

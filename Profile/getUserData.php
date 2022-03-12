@@ -3,8 +3,8 @@
 //FILLOJME SESIONIN
 session_start();
 
-if(!isset($_SESSION['user'])){
-	header("Location: ../LogIn/");
+if (!isset($_SESSION['user'])) {
+    header("Location: ../LogIn/");
     exit;
 }
     //MARRIM EMAILIN OSE NR_TEL NGA SESIONI USER
@@ -28,13 +28,12 @@ if(!isset($_SESSION['user'])){
     
     //NQFS ROW EKZISTON MARRIM TE DHENAT E USERIT DHE I RUAJME NA VARIABLA
     if ($userRow) {
-     $emri = $userRow["emri"];
-     $mbiemri = $userRow["mbiemri"];
-     $atesia = $userRow['atesia'];
-     $datelindja = $userRow['datelindja'];
-	 $email = $userRow['email'];
-	 $nr_tel = $userRow['nr_tel'];
-     $user = $userRow['username'];
-     $avatar = $userRow['avatar'];
-}
-?>
+        $emri = $userRow["emri"];
+        $mbiemri = $userRow["mbiemri"];
+        $atesia = $userRow['atesia'];
+        $datelindja = $userRow['datelindja'];
+        $email = $userRow['email'];
+        $nr_tel = $userRow['nr_tel'];
+        $user = $userRow['username'];
+        $avatar = $userRow['avatar'];
+    }

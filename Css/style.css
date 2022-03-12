@@ -146,9 +146,6 @@
         transition: all 0.5s ease;
     }
 
-    #sidebar-wrapper::-webkit-scrollbar {
-        display: none;
-    }
 
     #wrapper.toggled #sidebar-wrapper {
         width: 220px;
@@ -205,9 +202,6 @@
 
     .sidebar-nav li:hover {
         background: rebeccapurple !important;
-        border-radius: 10px;
-        margin-left: 10px;
-        margin-right: 10px;
     }
 
     .sidebar-nav li:hover:before,
@@ -227,16 +221,6 @@
         padding: 10px 15px 10px 30px;
     }
 
-    .sidebar-nav li a:hover,
-    .sidebar-nav li a:active,
-    .sidebar-nav li a:focus,
-    .sidebar-nav li.open a:hover,
-    .sidebar-nav li.open a:active,
-    .sidebar-nav li.open a:focus {
-        color: #fff;
-        text-decoration: none;
-        background-color: transparent;
-    }
 
     .sidebar-header {
         text-align: center;
@@ -256,11 +240,6 @@
 
     .sidebar-brand a {
         color: #ddd;
-    }
-
-    .sidebar-brand a:hover {
-        color: #fff;
-        text-decoration: none;
     }
 
     .dropdown-header {
@@ -461,10 +440,10 @@
     }
 
     .dataTables_wrapper {
-        position: relative;
+        position: center;
         clear: both;
-        margin-right: 20px;
         margin-left: 20px;
+        margin-right: 20px;
         padding: 20px;
         margin-bottom: 40px;
         margin-top: 20px;
@@ -560,4 +539,40 @@
         border: 1px solid #aaa;
         border-radius: 4px;
         margin-left: 50px;
+    }
+
+    .daterangepicker .drp-buttons {
+        clear: both;
+        text-align: center;
+        padding: 1px;
+        width: auto;
+        font-size: 17p;
+        border-top: 1px solid #ddd;
+        display: none;
+        line-height: initial;
+        vertical-align: middle;
+        margin-left: auto;
+    }
+
+    .daterangepicker .drp-selected {
+        padding-bottom: 10px;
+        font-size: 20px;
+    }
+
+    .nameColumn {
+        background-color: orange;
+    }
+
+    th,
+    td {
+        border: 1px solid black;
+        padding: 10px;
+    }
+
+    table {
+        margin: auto
+    }
+
+    .detailsProduktTs {
+        display: none;
     }

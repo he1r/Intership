@@ -1,19 +1,90 @@
-//EMAIL SINGLE SEARCH
 $(document).ready(function() {
-    $('.js-example-basic-single').select2({
-        ajax: "./update_email_search.php",
+
+    //EMAIL SINGLE SEARCH
+    $('.selectjs').select2({
+        placeholder: "Select Email",
+        ajax: {
+            url: "./Select2/update_email_search.php",
+            type: "POST",
+            delay: 500,
+            dataType: 'json',
+            data: function(params) {
+                return {
+                    q: params.term
+                }
+            },
+            processResults: function(data) {
+                return {
+                    results: data
+                }
+            },
+            error: function(xhr, status, error) {
+                alert(`${JSON.stringify(error)} | ${JSON.stringify(xhr)} | ${status}`)
+            }
+        },
+        cache: true
     });
-});
 
-//NUMRI MULTIPLE SEARCH
-$(document).ready(function() {
-    $('.js-example-basic-multiple').select2();
-});
 
-$(document).ready(function() {
-
+    //PHONE MULTIPLE SEARCH
+    $('.phone_search_select2').select2({
+        placeholder: "Select Phone",
+        multiple: true,
+        ajax: {
+            url: "./Select2/update_phone_search.php",
+            type: "POST",
+            delay: 500,
+            dataType: 'json',
+            data: function(params) {
+                return {
+                    q: params.term
+                }
+            },
+            processResults: function(data) {
+                return {
+                    results: data
+                }
+            },
+            error: function(xhr, status, error) {
+                alert(`${JSON.stringify(error)} | ${JSON.stringify(xhr)} | ${status}`)
+            }
+        },
+        cache: true
+    });
 
     //LOAD THE DATATABLE AND THE DATA
+    data = {
+        email_filter: function() {
+            if ($("#email_value").select2("data")[0]) {
+                return $("#email_value").select2("data")[0].text
+            } else {
+                return ""
+            }
+        },
+        phone_value: function() {
+            if ($("#phone_search_value").select2("data")) {
+                var datas = $("#phone_search_value").select2("data")
+                let dataArray = new Array();
+                let index = 0;
+                datas.forEach(element => {
+                    dataArray[index] = (element.text)
+                    index++;
+                });
+                return dataArray;
+            }
+        },
+        datelindja_start_date: function() {
+            var startdate = $('#filter_date_picker').data('daterangepicker').startDate;
+            console.log(startdate._i)
+            return startdate._i;
+        },
+        datelindja_end_date: function() {
+            var enddate = $('#filter_date_picker').data('daterangepicker').endDate;
+            return enddate._i;
+        }
+    }
+
+    //LOAD THE ADMIN TABLE
     var table = $('#adminTable').DataTable({
         processing: true,
         serverSide: true,
@@ -21,6 +92,8 @@ $(document).ready(function() {
         serverMethod: 'POST',
         ajax: {
             url: "updateTable.php",
+            data: data,
+
         },
         columns: [{
                 data: "id"
@@ -57,6 +130,12 @@ $(document).ready(function() {
             }
         ],
     });
+
+    //SEND THE FILTER DATA TO BACKEND TO UPDATE THE DATATABLE
+    $(document).on('click', '#search_filters', function(e) {
+        table.draw()
+    })
+
     //SHOW THE EDIT USER MODAL AND SEND THE DATA TO BACKEND
     $(document).on('click', '.edit_button', function(e) {
 
@@ -214,6 +293,7 @@ $(document).ready(function() {
             });
         })
     })
+
     //REMOVE THE EDIT USER MODAL ON BUTTON CLICK
     $("#cancelUpdatePassword").click(function() {
         //GET THE EDIT USER MODAL
@@ -222,6 +302,7 @@ $(document).ready(function() {
         //REMOVE THE EDIT USER MODAL
         modal.style.display = "none";
     })
+
     //ADMIN DELETE USER BUTTON
     $(document).on('click', '.admin_delete_user', function(e) {
 
@@ -288,6 +369,7 @@ $(document).ready(function() {
             }
         })
     });
+
     //ADD USER BUTTON => SHOWS THE ADD USER MODAL
     $("#admin_add_user").click(function(e) {
         //GET THE EDIT USER MODAL
@@ -436,6 +518,7 @@ $(document).ready(function() {
 
         })
     })
+
     // REMOVE THE ADD USER MODAL ON CLICK
     $("#cancel_update_user_button").click(function(e) {
         //GET THE EDIT USER MODAL
