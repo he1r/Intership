@@ -1,5 +1,5 @@
 <?php
-$dbcon = new mysqli("127.0.0.1", "root", "", "localweb");
+$dbcon = new mysqli("localhost", "root", "", "localweb");
 
 $query_data = "SELECT product_categories.id,
 product_categories.category_name,
