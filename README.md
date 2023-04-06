@@ -1,6 +1,4 @@
-# localweb
-
-* Intership Project for LocalWeb (frontend/ backend)
+* Intership Project (frontend/ backend)
 
 - Log in 
 - Sign in 
