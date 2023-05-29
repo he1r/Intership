@@ -61,7 +61,7 @@ if (isset($_POST['phone_value']) && !empty($_POST['phone_value'])) {
     }
 
     if ($email_filter != "") {
-        $email_query = " AND (email LIKE '%" . $email_filter . "%')";
+        @$email_query = " AND (email LIKE '%" . $email_filter . "%')";
     }
 
 
@@ -85,7 +85,7 @@ if (isset($_POST['phone_value']) && !empty($_POST['phone_value'])) {
      * MARRIM NUMRIN TOTAL TE REKORDEVE DUKE APLIKUAR FILTRAT
      */
 
-    $query_with_ftl = "SELECT COUNT(*) AS allcount 
+    @$query_with_ftl = "SELECT COUNT(*) AS allcount 
                    FROM  users
                    WHERE 
                    id LIKE '%" . $searchValue . "%' OR 	
@@ -114,7 +114,7 @@ if (isset($_POST['phone_value']) && !empty($_POST['phone_value'])) {
     /**
      * BEHET PERLLOGARITJA E TE GJITHE TE DHENAVE QE DO TE DERGOHEN NE FRONTEND
      */
-    $query_data = "SELECT id,
+    @$query_data = "SELECT id,
                       emri,
                       mbiemri,
                       atesia,
@@ -168,6 +168,6 @@ if (isset($_POST['phone_value']) && !empty($_POST['phone_value'])) {
     /**
      * DERGOJME TE DHENAT NE FRONTEND
      */
-    $response = array("draw" => intval($draw), "iTotalRecords" => $totalRecords, "iTotalDisplayRecords" => $totalRecordwithFilter, "aaData" => $table_data);
+    $response = array("draw" => intval($draw), "iTotalRecords" => $totalRecords, "iTotalDisplayRecords" => $totalRecordwithFilter, "aaData" => @$table_data);
     echo json_encode($response);
 ?>

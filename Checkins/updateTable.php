@@ -92,10 +92,10 @@ while ($row = mysqli_fetch_assoc($result_data)) {
     $data[$row['id']]['id'] = $row['id'];
     $data[$row['id']]['emri'] = $row['emri'];
     $data[$row['id']]['mbiemri'] = $row['mbiemri'];
-    $data[$row['id']]['hours_in'] += $row['check_out_hour'] - $row['check_in_hour'];
+    @$data[$row['id']]['hours_in'] += $row['check_out_hour'] - $row['check_in_hour'];
 
     //HOURS OUT
-    $data[$row['id']]['IN_HOURS_DATE'][$row['check_in_date']] += $row['check_out_hour'] - $row['check_in_hour'];
+    @$data[$row['id']]['IN_HOURS_DATE'][$row['check_in_date']] += $row['check_out_hour'] - $row['check_in_hour'];
     $data[$row['id']]['details'][] = array("date" => $row['check_in_date'], "check_in_hour" => $row['check_in_hour'], "check_out_hour"=> $row["check_out_hour"]);
 
     //CHECK IF WORK HOURS BIGGER OR EQUAL THAN 8 THEN THE HOURS OUT = 0
@@ -126,5 +126,5 @@ foreach ($data as $key => $row) {
     /**
      * DERGOJME TE DHENAT NE FRONTEND
      */
-    $response = array("draw" => intval($draw), "iTotalRecords" => $totalRecords, "iTotalDisplayRecords" => $totalRecordwithFilter, "aaData" => $table_data);
+    $response = array("draw" => intval($draw), "iTotalRecords" => $totalRecords, "iTotalDisplayRecords" => $totalRecordwithFilter, "aaData" => @$table_data);
     echo json_encode($response);

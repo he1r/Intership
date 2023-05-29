@@ -55,11 +55,6 @@ if (!isset($_SESSION["user"])) {
            echo "<li><a href='../Pagat/'>Pagat</a></li>";
        }
        ?>
-       <?php
-       if ($role == "admin") {
-           echo "<li><a href='../Produktet/'>Produktet</a></li>";
-       }
-       ?>
      </ul>
   </nav>
             <button type="button" class="hamburger animated fadeInLeft is-closed" data-toggle="offcanvas">

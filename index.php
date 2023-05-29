@@ -5,6 +5,6 @@
 		$uri = 'http://';
 	}
 	$uri .= $_SERVER['HTTP_HOST'];
-	header('Location: '.$uri.'/dashboard/localwebnew/LogIn/');
+	header('Location: '.$uri.'/dashboard/projekt/LogIn/');
 	exit;
 ?>

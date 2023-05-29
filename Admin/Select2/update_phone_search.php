@@ -2,7 +2,7 @@
 include '../../Includes/connect_to_database.php';
 
 //SEARCH VALUE NGA PHONE NUMBER SELECT2 FIELD
-$searchValue = mysqli_real_escape_string($dbcon, $_POST['q']);
+@$searchValue = mysqli_real_escape_string($dbcon, $_POST['q']);
 
 //IF SEARCH VALUE BIGGER OR EQUAL THAN 3 CREATE THE QUERY WITH THE SEARCH VALUE
 if (strlen($searchValue) >= 3) {
@@ -10,7 +10,7 @@ if (strlen($searchValue) >= 3) {
 }
 
 //THE QUERY DATA
-$query_data = "SELECT nr_tel
+@$query_data = "SELECT nr_tel
                FROM users where 1 = 1   
                $query LIMIT 10";
 

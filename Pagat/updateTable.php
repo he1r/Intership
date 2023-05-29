@@ -124,9 +124,9 @@ while ($row = mysqli_fetch_assoc($result_users_data)) {
         $out_hours = $row['hours'] - 8;
     }
 
-    $users_data[$row['id']]['in_hours'] += $in_hours;
-    $users_data[$row['id']]['out_hours'] += $out_hours;
-    $users_data[$row['id']]['total_hours'] += $row['hours'];
+    @$users_data[$row['id']]['in_hours'] += $in_hours;
+    @$users_data[$row['id']]['out_hours'] += $out_hours;
+    @$users_data[$row['id']]['total_hours'] += $row['hours'];
 
 
     // Llogarisim pagesen qe i takon per cdo dite
@@ -145,40 +145,40 @@ while ($row = mysqli_fetch_assoc($result_users_data)) {
 
     } elseif (isWeekend($row['date'])) {
         //NQFS DATA ESHTE DITE FUNDJAVE ATHERE ORE_IN_PUSHIM DHE ORE_OUT_PUSHIM = ME VLEREN E IN HOURS DHE OUT HOURS TE KESAJ DATE
-        $users_data[$row['id']]['ore_in_weekend'] += $in_hours;
-        $users_data[$row['id']]['oret_out_weekend'] += $out_hours;
+        @$users_data[$row['id']]['ore_in_weekend'] += $in_hours;
+        @$users_data[$row['id']]['oret_out_weekend'] += $out_hours;
         // percaktojme koefincentet per brenda orarit dhe jashte orarit
-        $k_in_hours = 1.25;
-        $k_out_hours = 1.5;
-        $users_data[$row['id']]['paga_in_weekend'] +=  $users_data[$row['id']]['payment_per_hour'] * $in_hours * $k_in_hours;
-        $users_data[$row['id']]['paga_out_weekend'] += $users_data[$row['id']]['payment_per_hour'] * $out_hours * $k_out_hours;
+        @$k_in_hours = 1.25;
+        @$k_out_hours = 1.5;
+        @$users_data[$row['id']]['paga_in_weekend'] +=  $users_data[$row['id']]['payment_per_hour'] * $in_hours * $k_in_hours;
+        @$users_data[$row['id']]['paga_out_weekend'] += $users_data[$row['id']]['payment_per_hour'] * $out_hours * $k_out_hours;
 
     } else {
         //NQFS DATA ESHTE DITE PUNE ATHERE ORE_IN_PUSHIM DHE ORE_OUT_PUSHIM = ME VLEREN E IN HOURS DHE OUT HOURS TE KESAJ DATE
-        $users_data[$row['id']]['ore_in_normal'] += $in_hours;
-        $users_data[$row['id']]['oret_out_normal'] += $out_hours;
+        @$users_data[$row['id']]['ore_in_normal'] += $in_hours;
+        @$users_data[$row['id']]['oret_out_normal'] += $out_hours;
         // percaktojme koefincentet per brenda orarit dhe jashte orarit
         $k_in_hours = 1;
         $k_out_hours = 1.25;
-        $users_data[$row['id']]['paga_in_normal'] +=  $users_data[$row['id']]['payment_per_hour'] * $in_hours * $k_in_hours;
-        $users_data[$row['id']]['paga_out_normal'] += $users_data[$row['id']]['payment_per_hour'] * $out_hours * $k_out_hours;
+        @$users_data[$row['id']]['paga_in_normal'] +=  $users_data[$row['id']]['payment_per_hour'] * $in_hours * $k_in_hours;
+        @$users_data[$row['id']]['paga_out_normal'] += $users_data[$row['id']]['payment_per_hour'] * $out_hours * $k_out_hours;
 
     }
 
     // Llogaritja e pages totale, pages in hours dhe paga out of hours
-    $users_data[$row['id']]['totale_payment_in_hours'] += $users_data[$row['id']]['payment_per_hour'] * $in_hours * $k_in_hours;
-    $users_data[$row['id']]['totale_payment_out_hours'] += $users_data[$row['id']]['payment_per_hour'] * $out_hours * $k_out_hours;
-    $users_data[$row['id']]['totale_payment'] += $users_data[$row['id']]['payment_per_hour'] * $in_hours * $k_in_hours + $users_data[$row['id']]['payment_per_hour'] * $out_hours * $k_out_hours;
+    @$users_data[$row['id']]['totale_payment_in_hours'] += $users_data[$row['id']]['payment_per_hour'] * $in_hours * $k_in_hours;
+    @$users_data[$row['id']]['totale_payment_out_hours'] += $users_data[$row['id']]['payment_per_hour'] * $out_hours * $k_out_hours;
+    @$users_data[$row['id']]['totale_payment'] += $users_data[$row['id']]['payment_per_hour'] * $in_hours * $k_in_hours + $users_data[$row['id']]['payment_per_hour'] * $out_hours * $k_out_hours;
 
     // Llogaritja per date e pages totale, pages in hours dhe paga out of hours
-    $users_data[$row['id']]['Cal_For_DATE'][$row['date']]['payment_in_hurs'] += $users_data[$row['id']]['payment_per_hour'] * $in_hours * $k_in_hours;
-    $users_data[$row['id']]['Cal_For_DATE'][$row['date']]['payment_out_hours'] += $users_data[$row['id']]['payment_per_hour'] * $out_hours * $k_out_hours;
-    $users_data[$row['id']]['Cal_For_DATE'][$row['date']]['totale_payment'] += $users_data[$row['id']]['payment_per_hour'] * $in_hours * $k_in_hours + $users_data[$row['id']]['payment_per_hour'] * $out_hours * $k_out_hours;
+    @$users_data[$row['id']]['Cal_For_DATE'][$row['date']]['payment_in_hurs'] += $users_data[$row['id']]['payment_per_hour'] * $in_hours * $k_in_hours;
+    @$users_data[$row['id']]['Cal_For_DATE'][$row['date']]['payment_out_hours'] += $users_data[$row['id']]['payment_per_hour'] * $out_hours * $k_out_hours;
+    @$users_data[$row['id']]['Cal_For_DATE'][$row['date']]['totale_payment'] += $users_data[$row['id']]['payment_per_hour'] * $in_hours * $k_in_hours + $users_data[$row['id']]['payment_per_hour'] * $out_hours * $k_out_hours;
 
-    $users_data[$row['id']]['Cal_For_DATE'][$row['date']]['data'] = $row['date'];
-    $users_data[$row['id']]['Cal_For_DATE'][$row['date']]['in_hours'] = $in_hours;
-    $users_data[$row['id']]['Cal_For_DATE'][$row['date']]['out_hours'] = $out_hours;
-    $users_data[$row['id']]['Cal_For_DATE'][$row['date']]['total_hours'] = $in_hours + $out_hours;
+    @$users_data[$row['id']]['Cal_For_DATE'][$row['date']]['data'] = $row['date'];
+    @$users_data[$row['id']]['Cal_For_DATE'][$row['date']]['in_hours'] = $in_hours;
+    @$users_data[$row['id']]['Cal_For_DATE'][$row['date']]['out_hours'] = $out_hours;
+    @$users_data[$row['id']]['Cal_For_DATE'][$row['date']]['total_hours'] = $in_hours + $out_hours;
 }
     /**
      * PERSHTASIM TE DHENAT SIPAS FORMATIT QE KERKOHET NE BACKEND
@@ -188,21 +188,21 @@ while ($row = mysqli_fetch_assoc($result_users_data)) {
         $table_data[] = array(
         "actions" => '<button class="showPagatDetails btn">+</button>',
         "full_name" => $row['full_name'],
-        "ore_in_pushim" =>  $row['ore_in_pushim'],
+        "ore_in_pushim" =>  @$row['ore_in_pushim'],
         "ore_in_weekend" => $row['ore_in_weekend'],
         "ore_in_normal" =>$row['ore_in_normal'], 
         "oret_in" => $row['in_hours'], 
-        "ore_out_pushim" => $row['oret_out_pushim'],
+        "ore_out_pushim" => @$row['oret_out_pushim'],
         "ore_out_weekend" => $row['oret_out_weekend'],
         "ore_out_normal" => $row['oret_out_normal'],
         "oret_out" => $row['out_hours'],
         "oret_total" => $row["total_hours"],
         "paga_total" => round($row['totale_payment'], 2),
-        "paga_in_pushim" => round($row['paga_in_pushim'], 2),
+        "paga_in_pushim" => @round($row['paga_in_pushim'], 2),
         "paga_in_weekend" => round($row['paga_in_weekend'], 2),
         "paga_in_normal" => round($row['paga_in_normal'], 2),
         "paga_total_in_hours" => round($row["totale_payment_in_hours"], 2),
-        "paga_out_pushim" => round($row['paga_out_pushim'], 2),
+        "paga_out_pushim" => @round($row['paga_out_pushim'], 2),
         "paga_out_weekend" => round($row['paga_out_weekend'], 2),
         "paga_out_normal" => round($row['paga_out_normal'], 2),
         "paga_total_out_hours" => round($row["totale_payment_out_hours"], 2),

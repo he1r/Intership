@@ -5,7 +5,7 @@ include '../Includes/regex.php';
  /**
  *  CHECK IF USER SENDING THE REQUEST IS AN ADMIN
  */
-if ($_SESSION["user"]) {
+if (@$_SESSION["user"]) {
     //THE USER ID
     $sessionId = $_SESSION["user"];
 
@@ -150,7 +150,7 @@ if ($_POST["action"] == 'adminUpdateUser') {
         }
     };
     //GET THE IMAGE FROM THE POST REQUEST
-    $img = $_FILES['file']['name'];
+    @$img = $_FILES['file']['name'];
             
     //KRIJOJM RANDOM NUMBERS NGA 1 DERI NE 1000 PER TU MOS U BERE UPLOAD NJE IMAZH ME EMER TE NJEJTE
     $final_image = rand(1, 1000).$img;

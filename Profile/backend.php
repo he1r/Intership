@@ -196,7 +196,7 @@ if ($_POST['action'] == 'updateUser') {
     };
 
     //GET THE IMAGE FROM THE POST REQUEST
-    $img = $_FILES['file']['name'];
+    $img = @$_FILES['file']['name'];
             
     //KRIJOJM RANDOM NUMBERS NGA 1 DERI NE 1000 PER TU MOS U BERE UPLOAD NJE IMAZH ME EMER TE NJEJTE
     $final_image = rand(1, 1000).$img;

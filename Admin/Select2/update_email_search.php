@@ -2,7 +2,7 @@
 include '../../Includes/connect_to_database.php';
 
 //SEARCH VALUE FROM EMAIL SELECT2 FIELD
-$searchValue = mysqli_real_escape_string($dbcon, $_POST['q']);
+@$searchValue = mysqli_real_escape_string($dbcon, $_POST['q']);
 
 //IF SEARCH VALUE FROM EMAIL SELECT2 BIGGER OR EQUAL THAN 3 CREATE THE QUERY FOR THE SEARCH VALUE
 if (strlen($searchValue) >= 3) {
@@ -10,7 +10,7 @@ if (strlen($searchValue) >= 3) {
 }
 
 //THE QUERY DATA FOR ALL THE EMAILS
-$query_data = "SELECT email
+@$query_data = "SELECT email
                FROM users where 1 = 1   
                $query LIMIT 10";
 
